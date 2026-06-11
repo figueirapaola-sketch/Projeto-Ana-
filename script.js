@@ -2,7 +2,7 @@
    FEIRA EXPRESS - PORTAL WEB INTERATIVO E REATIVO
    ===================================================== */
 
-// Base de Dados Compartilhada em tempo real (Cliente <-> Feirante)
+// Banco de dados simulado em tempo real
 let produtosSimulados = [
     { id: 1, nome: "Tomate", preco: 2.49, unidade: "1kg", img: "🍅", desconto: "-40%", categoria: "Verduras" },
     { id: 2, nome: "Banana Prata", preco: 2.99, unidade: "1kg", img: "🍌", desconto: "-50%", categoria: "Frutas" },
@@ -11,18 +11,18 @@ let produtosSimulados = [
     { id: 5, nome: "Cenoura Orgânica", preco: 2.80, unidade: "1kg", img: "🥕", desconto: "", categoria: "Legumes" }
 ];
 
-// Comandas ativas que aparecem na tela do feirante
+// Comandas ativas que aparecem no terminal do feirante
 let pedidosDoFeirante = [
     { id: 101, cliente: "Carlos Silva", desc: "2x Tomate, 1x Alface", total: 6.47, status: "Pendente" }
 ];
 
-// Estados do Cliente
+// Estados locais da aplicação do Cliente
 let carrinho = JSON.parse(localStorage.getItem('carrinho_feira')) || [];
 let categoriaAtiva = "Todas";
 let filtroTexto = "";
-let tamanhoFonteAtual = 16; // Inicial do documento em px
+let tamanhoFonteAtual = 16; 
 
-// Elementos capturados do DOM
+// Elementos de cache do DOM
 const listaOfertasHome = document.getElementById('lista-ofertas-home');
 const listaProdutosBusca = document.getElementById('lista-produtos-busca');
 const listaItensCarrinho = document.getElementById('lista-itens-carrinho');
@@ -32,27 +32,22 @@ const totalVal = document.getElementById('total-val');
 const checkoutBtn = document.querySelector('.action-checkout-button');
 const badgesContador = document.querySelectorAll('.badge-total-contador');
 
-/* -----------------------------------------------------
-   MELHORIA DE ACESSIBILIDADE JS (CRITÉRIO NOTA MÁXIMA)
------------------------------------------------------ */
+// Função para calibrar o tamanho da fonte (Acessibilidade)
 function alterarFonte(direcao) {
     tamanhoFonteAtual += direcao;
-    // Limites de segurança para não quebrar o layout
     if (tamanhoFonteAtual < 13) tamanhoFonteAtual = 13;
     if (tamanhoFonteAtual > 22) tamanhoFonteAtual = 22;
     document.documentElement.style.fontSize = tamanhoFonteAtual + 'px';
 }
 
-/* -----------------------------------------------------
-   RENDERIZAÇÃO: RELATÓRIOS DO CLIENTE
------------------------------------------------------ */
+// Função para construir o catálogo de ofertas na home do cliente
 function renderizarHome() {
     if (!listaOfertasHome) return;
     listaOfertasHome.innerHTML = '';
 
     const ofertas = produtosSimulados.filter(p => p.desconto !== "");
     
-    if(ofertas.length === 0) {
+    if (ofertas.length === 0) {
         listaOfertasHome.innerHTML = '<p class="empty-state-notice">Não há ofertas cadastradas pelos feirantes no momento.</p>';
         return;
     }
@@ -74,6 +69,7 @@ function renderizarHome() {
     });
 }
 
+// Função para montar a vitrine com filtros na aba de busca
 function renderizarBusca() {
     if (!listaProdutosBusca) return;
     listaProdutosBusca.innerHTML = '';
@@ -106,6 +102,7 @@ function renderizarBusca() {
     });
 }
 
+// Função para listar os produtos adicionados no carrinho
 function renderizarCarrinho() {
     if (!listaItensCarrinho) return;
     listaItensCarrinho.innerHTML = '';
@@ -140,9 +137,7 @@ function renderizarCarrinho() {
     atualizarResumoFinanceiro(subtotal);
 }
 
-/* -----------------------------------------------------
-   GESTÃO DO FEIRANTE (PAINEL OPERACIONAL)
------------------------------------------------------ */
+// Função para renderizar as informações e listas do painel do feirante
 function renderizarPainelFeirante() {
     const divEstoque = document.getElementById('feirante-lista-estoque');
     if (divEstoque) {
@@ -198,6 +193,7 @@ function renderizarPainelFeirante() {
     }
 }
 
+// Função para atualizar os preços das mercadorias pelo painel de controle
 function alterarPrecoProdutoFeirante(id, novoPreco) {
     const valor = parseFloat(novoPreco);
     if (!isNaN(valor) && valor > 0) {
@@ -209,6 +205,7 @@ function alterarPrecoProdutoFeirante(id, novoPreco) {
     }
 }
 
+// Função para alternar o selo de liquidação do alimento e recalcular preço
 function alternarSobraFeirante(id) {
     const produto = produtosSimulados.find(p => p.id === id);
     if (produto) {
@@ -224,6 +221,7 @@ function alternarSobraFeirante(id) {
     }
 }
 
+// Função para criar um novo produto dentro da banca do feirante
 function cadastrarProdutoFeirante() {
     const nome = document.getElementById('form-nome').value.trim();
     const preco = parseFloat(document.getElementById('form-preco').value);
@@ -257,6 +255,7 @@ function cadastrarProdutoFeirante() {
     alternarSubFeirante('estoque', document.querySelector('.seller-sidebar-tabs button'));
 }
 
+// Função para despachar e mudar o status da comanda recebida
 function concluirPedidoFeirante(id) {
     const pedido = pedidosDoFeirante.find(p => p.id === id);
     if (pedido) {
@@ -266,6 +265,7 @@ function concluirPedidoFeirante(id) {
     }
 }
 
+// Função para navegar pelas sub-abas internas do feirante (Estoque, Pedidos, Cadastro)
 function alternarSubFeirante(subAba, btn) {
     document.querySelectorAll('.seller-sub-screen').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.seller-tab-btn').forEach(b => b.classList.remove('active'));
@@ -275,15 +275,14 @@ function alternarSubFeirante(subAba, btn) {
     renderPainelFeiranteSeAtivo();
 }
 
+// Função auxiliar para verificar se o painel está aberto antes de renderizar
 function renderPainelFeiranteSeAtivo() {
     if (document.getElementById('tela-feirante').classList.contains('active')) {
         renderizarPainelFeirante();
     }
 }
 
-/* -----------------------------------------------------
-   AÇÕES DO CLIENTE E GLOBAL
------------------------------------------------------ */
+// Função para alterar a localização de entrega do cliente na home
 function alterarLocalizacao() {
     const local = prompt("Insira a nova região para entrega:", document.getElementById('texto-localizacao').innerText);
     if (local && local.trim() !== "") {
@@ -291,6 +290,7 @@ function alterarLocalizacao() {
     }
 }
 
+// Função para gerenciar adições e subtrações de itens do carrinho
 function alterarQuantidade(id, mudanca) {
     const itemNoCarrinho = carrinho.find(item => item.id === id);
     if (itemNoCarrinho) {
@@ -307,6 +307,7 @@ function alterarQuantidade(id, mudanca) {
     salvarEAtualizar();
 }
 
+// Função para filtrar a vitrine por categorias clicáveis
 function filtrarCategoria(cat, elemento) {
     categoriaAtiva = cat;
     document.querySelectorAll('.search-cat-pill').forEach(p => p.classList.remove('active'));
@@ -314,11 +315,13 @@ function filtrarCategoria(cat, elemento) {
     renderizarBusca();
 }
 
+// Função para escutar a barra de pesquisa por digitação do usuário
 function filtrarProdutos(texto) {
     filtroTexto = texto;
     renderizarBusca();
 }
 
+// Função para fazer o atalho de categorias da home pular direto para a busca filtrada
 function irParaBuscaComCategoria(cat) {
     alternarTela('tela-buscar');
     const pills = Array.from(document.querySelectorAll('.search-cat-pill'));
@@ -326,7 +329,7 @@ function irParaBuscaComCategoria(cat) {
     if (pillAlvo) filtrarCategoria(cat, pillAlvo);
 }
 
-// Vincula a comanda de compra de forma real com o painel do feirante
+// Função para processar o fechamento do pedido e transferi-lo para a tela do feirante
 function finalizarCompra() {
     if (carrinho.length === 0) return;
     
@@ -347,6 +350,7 @@ function finalizarCompra() {
     alternarTela('tela-inicio');
 }
 
+// Função para esvaziar o carrinho por completo
 function limparCarrinho() {
     if (carrinho.length > 0 && confirm("Deseja esvaziar seu carrinho?")) {
         carrinho = [];
@@ -354,6 +358,7 @@ function limparCarrinho() {
     }
 }
 
+// Função para guardar informações no LocalStorage e recalcular indicadores visuais
 function salvarEAtualizar() {
     localStorage.setItem('carrinho_feira', JSON.stringify(carrinho));
     const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
@@ -369,6 +374,7 @@ function salvarEAtualizar() {
     renderPainelFeiranteSeAtivo();
 }
 
+// Função para atualizar os valores de subtotal, frete e total do carrinho
 function atualizarResumoFinanceiro(subtotal) {
     const taxa = subtotal > 0 ? 1.00 : 0.00;
     if (subtotalVal) subtotalVal.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
@@ -377,6 +383,7 @@ function atualizarResumoFinanceiro(subtotal) {
     if (checkoutBtn) checkoutBtn.disabled = subtotal === 0;
 }
 
+// Função para fazer a troca de janelas no modelo SPA (Single Page Application)
 function alternarTela(idTela) {
     document.querySelectorAll('.screen').forEach(t => t.classList.remove('active'));
     const alvo = document.getElementById(idTela);
@@ -392,6 +399,7 @@ function alternarTela(idTela) {
     if (idTela === 'tela-feirante') renderizarPainelFeirante();
 }
 
+// Evento disparado no primeiro carregamento do documento
 document.addEventListener('DOMContentLoaded', () => {
     salvarEAtualizar();
 });
