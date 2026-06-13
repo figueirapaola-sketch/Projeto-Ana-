@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="agrinho, sustentabilidade, xepa digital, feira">
     <title>Feira Express - O Seu Portal de Alimentos Frescos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
     <div class="web-main-container">
 
         <header class="web-navbar">
-            <div class="brand-logo-area" onclick="alternarTela('tela-inicio')" style="cursor:pointer;">
+            <div class="brand-logo-area cursor-pointer" onclick="alternarTela('tela-inicio')">
                 🥬 Feira<span>Express</span>
             </div>
-            
+
             <div class="accessibility-controls">
                 <button onclick="alterarFonte(-1)" title="Diminuir Fonte">A-</button>
                 <button onclick="alterarFonte(1)" title="Aumentar Fonte">A+</button>
             </div>
 
             <nav class="web-nav-links">
-                <button class="nav-action-tab active" id="tab-inicio" onclick="alternarTela('tela-inicio')">🏠 Início</button>
-                <button class="nav-action-tab" id="tab-buscar" onclick="alternarTela('tela-buscar')">🔍 Buscar Produtos</button>
+                <button class="nav-action-tab active" id="tab-inicio" onclick="alternarTela('tela-inicio')">🏠
+                    Início</button>
+                <button class="nav-action-tab" id="tab-buscar" onclick="alternarTela('tela-buscar')">🔍 Buscar
+                    Produtos</button>
                 <button class="nav-action-tab" id="tab-carrinho" onclick="alternarTela('tela-carrinho')">
                     🛒 Carrinho <span class="cart-tab-pill-badge badge-total-contador">0</span>
                 </button>
-                <button class="nav-action-tab" id="tab-perfil" onclick="alternarTela('tela-perfil')">👤 Mudar Perfil</button>
+                <button class="nav-action-tab" id="tab-perfil" onclick="alternarTela('tela-perfil')">👤 Mudar
+                    Perfil</button>
             </nav>
         </header>
 
         <main class="web-content-area">
 
             <div id="tela-perfil" class="screen active">
+
+                <div class="banner-entrada-app"></div>
+
                 <div class="profile-selection-intro">
                     <h2>Seja bem-vindo à Feira Express</h2>
                     <p>Selecione como você deseja interagir com a plataforma hoje:</p>
@@ -41,16 +51,22 @@
 
                 <div class="cards-wrapper">
                     <div class="option-card" onclick="alternarTela('tela-inicio')">
-                        <div class="option-card-avatar">🧺</div>
+                        <div class="option-card-avatar">
+                            <img src="./assets/frutas diversas.jpg" alt="Acesso de Cliente">
+                        </div>
                         <h3>Sou Cliente</h3>
-                        <p>Quero comprar produtos frescos de produtores locais com descontos imperdíveis e combater o desperdício.</p>
+                        <p>Quero comprar produtos frescos de produtores locais com descontos imperdíveis e combater o
+                            desperdício.</p>
                         <button class="rect-arrow-button">Acessar como Cliente ➔</button>
                     </div>
 
                     <div class="option-card option-card-seller" onclick="alternarTela('tela-feirante')">
-                        <div class="option-card-avatar">🏪</div>
+                        <div class="option-card-avatar">
+                            <img src="./assets/frutasfeira.jpg" alt="Acesso de Feirante">
+                        </div>
                         <h3>Sou Feirante (Painel de Gestão)</h3>
-                        <p>Gerencie seu estoque virtual, mude preços, ative promoções relâmpago e controle os pedidos da sua banca.</p>
+                        <p>Gerencie seu estoque virtual, mude preços, ative promoções relâmpago e controle os pedidos da
+                            sua banca.</p>
                         <button class="rect-arrow-button">Acessar Painel da Banca ➔</button>
                     </div>
                 </div>
@@ -59,7 +75,7 @@
             <div id="tela-inicio" class="screen">
                 <div class="home-welcome-row">
                     <div class="user-greeting-box">
-                        <h2>Olá, Ana! Que bom ver você por aqui.</h2>
+                        <h2 id="user-greeting-box">Olá, Ana! Que bom ver você por aqui.</h2>
                         <div class="location-selector" id="seletor-localizacao" onclick="alterarLocalizacao()">
                             📍 Entregar em: <span id="texto-localizacao">São Paulo, SP</span> ▾
                         </div>
@@ -69,7 +85,8 @@
                 <div class="hero-countdown-banner">
                     <div class="hero-info-side">
                         <h3>Fim de Feira Relâmpago! 🕒</h3>
-                        <p>Os feirantes locais estão liquidando as sobras do dia para evitar o descarte. Aproveite agora!</p>
+                        <p>Os feirantes locais estão liquidando as sobras do dia para evitar o descarte. Aproveite
+                            agora!</p>
                         <div class="timer-display">
                             <span>Ofertas expiram em:</span>
                             <div class="timer-segment"><span>01</span>H</div> :
@@ -82,22 +99,32 @@
 
                 <div class="section-header-flex">
                     <h3>Navegue por Categorias</h3>
-                    <a href="#" class="link-ver-todas" onclick="irParaBuscaComCategoria('Frutas'); return false;">Ver todos os produtos</a>
+                    <a href="#" class="link-ver-todas" onclick="irParaBuscaComCategoria('Frutas'); return false;">Ver
+                        todos os produtos</a>
                 </div>
 
                 <div class="horizontal-category-list">
-                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Frutas')"><span class="cat-emoji">🍎</span> Frutas Frescas</div>
-                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Verduras')"><span class="cat-emoji">🥬</span> Verduras e Hortaliças</div>
-                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Legumes')"><span class="cat-emoji">🥕</span> Legumes Selecionados</div>
+                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Frutas')">
+                        <span class="cat-emoji"><img src="./assets/frutas.jpg" alt="Frutas"></span> Frutas Frescas
+                    </div>
+                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Verduras')">
+                        <span class="cat-emoji"><img src="./assets/hortaliças.jpg" alt="Verduras"></span> Verduras e
+                        Hortaliças
+                    </div>
+                    <div class="home-cat-card" onclick="irParaBuscaComCategoria('Legumes')">
+                        <span class="cat-emoji"><img src="./assets/legumes.jpg" alt="Legumes"></span> Legumes
+                        Selecionados
+                    </div>
                 </div>
 
-                <div class="section-header-flex" style="margin-top: 30px;">
+                <div class="section-header-flex margin-top-30">
                     <h3>🏷️ Sobras do Dia em Destaque (Descontos Ativos)</h3>
                 </div>
                 <div class="web-products-grid" id="lista-ofertas-home"></div>
 
                 <div class="delivery-info-banner">
-                    💡 <strong>Dica Express:</strong> Adicionando itens da mesma banca, você economiza no frete e retira tudo de uma só vez!
+                    💡 <strong>Dica Express:</strong> Adicionando itens da mesma banca, você economiza no frete e retira
+                    tudo de uma só vez!
                 </div>
             </div>
 
@@ -110,9 +137,11 @@
                 <div class="search-filter-bar-web">
                     <div class="search-box-wrapper">
                         <span>🔍</span>
-                        <input type="text" id="campo-de-busca" placeholder="Digite o nome do alimento (ex: tomate, banana...)" oninput="filtrarProdutos(this.value)">
+                        <input type="text" id="campo-de-busca"
+                            placeholder="Digite o nome do alimento (ex: tomate, banana...)"
+                            oninput="filtrarProdutos(this.value)">
                     </div>
-                    
+
                     <div class="search-categories-carousel">
                         <div class="search-cat-pill active" onclick="filtrarCategoria('Todas', this)">Todas</div>
                         <div class="search-cat-pill" onclick="filtrarCategoria('Frutas', this)">Frutas</div>
@@ -165,16 +194,21 @@
 
                 <div class="seller-dashboard-layout">
                     <div class="seller-sidebar-tabs">
-                        <button class="seller-tab-btn active" onclick="alternarSubFeirante('estoque', this)">🍏 Meu Estoque à Venda</button>
-                        <button class="seller-tab-btn" onclick="alternarSubFeirante('pedidos', this)">📦 Pedidos Recentes (<span id="count-pedidos-feirante">0</span>)</button>
-                        <button class="seller-tab-btn" onclick="alternarSubFeirante('novo', this)">➕ Adicionar Novo Alimento</button>
+                        <button class="seller-tab-btn active" onclick="alternarSubFeirante('estoque', this)">🍏 Meu
+                            Estoque à Venda</button>
+                        <button class="seller-tab-btn" onclick="alternarSubFeirante('pedidos', this)">📦 Pedidos
+                            Recentes (<span id="count-pedidos-feirante">0</span>)</button>
+                        <button class="seller-tab-btn" onclick="alternarSubFeirante('novo', this)">➕ Adicionar Novo
+                            Alimento</button>
                     </div>
 
                     <div class="seller-main-panel-content">
-                        
+
                         <div id="sub-seller-estoque" class="seller-sub-screen active">
                             <div class="seller-instruction">
-                                <strong>💡 Instrução de Operação:</strong> Atualize os valores digitando nas caixas. Marque um produto como <strong>"Sobra"</strong> para aplicar 50% de desconto imediato e jogá-lo automaticamente no topo da página inicial dos clientes.
+                                <strong>💡 Instrução de Operação:</strong> Atualize os valores digitando nas caixas.
+                                Marque um produto como <strong>"Sobra"</strong> para aplicar 50% de desconto imediato e
+                                jogá-lo automaticamente no topo da página inicial dos clientes.
                             </div>
                             <div class="seller-stock-list" id="feirante-lista-estoque"></div>
                         </div>
@@ -211,17 +245,17 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Selecione o Emoji:</label>
+                                        <label>Selecione a Imagem:</label>
                                         <select id="form-img">
-                                            <option value="🍎">🍎 Maçã</option>
-                                            <option value="🍌">🍌 Banana</option>
-                                            <option value="🍅">🍅 Tomate</option>
-                                            <option value="🥦">🥦 Brócolis</option>
-                                            <option value="🥕">🥕 Cenoura</option>
+                                            <option value="./assets/banana.jpg">🍌 Banana</option>
+                                            <option value="./assets/tomate.jpg">🍅 Tomate</option>
+                                            <option value="./assets/alface.jpg">🥬 Alface</option>
+                                            <option value="./assets/cenoura.jpg">🥕 Cenoura</option>
                                         </select>
                                     </div>
                                 </div>
-                                <button class="btn-seller-save" onclick="cadastrarProdutoFeirante()">Lançar Produto na Vitrine do Site</button>
+                                <button class="btn-seller-save" onclick="cadastrarProdutoFeirante()">Lançar Produto na
+                                    Vitrine do Site</button>
                             </div>
                         </div>
 
@@ -235,7 +269,8 @@
             <div class="footer-top-grid">
                 <div class="footer-col-info">
                     <div class="footer-brand">🥬 Feira<span>Express</span></div>
-                    <p class="footer-tagline">Conectando feirantes locais a consumidores conscientes. Tecnologia contra o desperdício de comida.</p>
+                    <p class="footer-tagline">Conectando feirantes locais a consumidores conscientes. Tecnologia contra
+                        o desperdício de comida.</p>
                 </div>
                 <div class="footer-col-links">
                     <h4>Institucional</h4>
@@ -249,12 +284,14 @@
                 </div>
             </div>
             <div class="footer-bottom-copyright">
-                &copy; 2026 Feira Express S.A. Todos os direitos reservados. Projeto Integrador de Combate ao Desperdício Coletivo.
+                &copy; 2026 Feira Express S.A. Todos os direitos reservados. Projeto Integrador de Combate ao
+                Desperdício Coletivo.
             </div>
         </footer>
 
     </div>
-
-    <script src="script.js"></script>
+    <div id="toast-container" class="toast-container"></div>
+    <script src="./javascript/script.js"></script>
 </body>
+
 </html>
